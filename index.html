@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tesda Batch 3 | Jbudduan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0a0a0a;
+            --text-primary: #ffffff;
+            --text-secondary: #d1d1d1;
+            --text-muted: #666666;
+            --accent-color: #c5a059;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --nav-bg: rgba(5, 5, 5, 0.85);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #fcfcfc;
+            --bg-secondary: #f3f4f6;
+            --text-primary: #111111;
+            --text-secondary: #374151;
+            --text-muted: #6b7280;
+            --accent-color: #b38a3e;
+            --card-bg: rgba(0, 0, 0, 0.02);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --nav-bg: rgba(252, 252, 252, 0.85);
+        }
+
+        * { transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-primary); color: var(--text-secondary); overflow-x: hidden; }
+        .serif { font-family: 'Cormorant Garamond', serif; }
+        .signature-font { font-family: 'Great Vibes', cursive; }
+        
+        .nav-blur { background: var(--nav-bg); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); }
+        .art-card { background: var(--card-bg); border: 1px solid var(--border-color); transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+        .art-card:hover { border-color: var(--accent-color); transform: translateY(-8px); }
+        .img-container { position: relative; overflow: hidden; background: #000; aspect-ratio: 4/5; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .art-card:hover img { transform: scale(1.05); }
+
+        .coa-paper {
+            position: relative;
+            background: var(--bg-primary);
+            border: 1px solid var(--accent-color);
+            padding: 4rem 2rem;
+            max-width: 850px;
+            margin: 0 auto;
+            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .coa-border-inner {
+            position: absolute;
+            inset: 15px;
+            border: 1px solid var(--accent-color);
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .jbudduan-seal {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #f3e4c4 0%, #c5a059 50%, #9e7d3d 100%);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 0 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: seal-shimmer 8s infinite linear;
+        }
+
+        .seal-inner-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: rotate-seal 20s infinite linear;
+        }
+
+        .seal-inner-text text {
+            font-family: 'Inter', sans-serif;
+            font-size: 8px;
+            font-weight: 800;
+            text-transform: uppercase;
+            fill: rgba(0,0,0,0.6);
+            letter-spacing: 2.2px;
+        }
+
+        .seal-center {
+            width: 58%;
+            height: 58%;
+            background: rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        .seal-initial {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            font-size: 32px;
+            color: rgba(0,0,0,0.7);
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
+        }
+
+        .signature-img {
+            max-width: 180px;
+            height: auto;
+            max-height: 70px;
+            filter: contrast(1.1) brightness(0.9);
+        }
+        
+        [data-theme="dark"] .signature-img {
+            filter: invert(1) brightness(1.8) contrast(1.2);
+            mix-blend-mode: screen;
+        }
+
+        /* Animations */
+        @keyframes rotate-seal { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes seal-shimmer { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.15) contrast(1.1); } }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        #lightbox { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.98); z-index: 1000; align-items: center; justify-content: center; padding: 1.5rem; cursor: zoom-out; }
+    </style>
+</head>
+<body>
+
+    <nav class="fixed w-full z-50 nav-blur">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="text-lg font-light serif tracking-[0.4em] uppercase text-[var(--text-primary)]">The Memories</div>
+            <div class="flex items-center space-x-6">
+                <button id="themeToggle" class="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--card-bg)] border border-[var(--border-color)] hover:border-[var(--accent-color)] text-[var(--text-primary)]">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <div class="hidden sm:block text-[9px] tracking-[0.4em] uppercase font-semibold text-amber-500 bg-amber-500/10 px-3 py-1 border border-amber-500/20">Official Access</div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-44 pb-20 px-6 text-center max-w-4xl mx-auto">
+        <span class="text-[9px] tracking-[0.6em] text-[var(--text-muted)] uppercase block mb-4">Digital Copy</span>
+        <h1 class="text-5xl md:text-7xl serif font-light italic mb-8 text-[var(--text-primary)]">Final Artworks</h1>
+        <div class="w-12 h-[1px] bg-amber-600/40 mx-auto mb-8"></div>
+        <p class="text-[var(--text-muted)] font-light leading-relaxed max-w-md mx-auto text-sm">
+            A curated presentation of our digital assets. Click any image to view in high fidelity and download.
+        </p>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 pb-32">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Item 1 -->
+            <div class="art-card reveal">
+                <div class="img-container cursor-pointer" onclick="openLightbox('Original.jpeg', 'Reference Portrait', 'Original Source Image')">
+                    <img src="Original.jpeg" alt="Original" onerror="this.src='https://placehold.co/800x1000/1a1a1a/c5a059?text=Original.jpeg'">
+                </div>
+                <div class="p-6">
+                    <h3 class="serif text-2xl text-[var(--text-primary)] mb-1">Reference Portrait</h3>
+                    <p class="text-[10px] tracking-widest text-amber-500/60 uppercase">Original Reference</p>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="art-card reveal">
+                <div class="img-container cursor-pointer" onclick="openLightbox('chibi.jpeg', 'Stylized Chibi', 'Digital Character Illustration')">
+                    <img src="chibi.jpeg" alt="Chibi" onerror="this.src='https://placehold.co/800x1000/1a1a1a/c5a059?text=chibi.jpeg'">
+                </div>
+                <div class="p-6">
+                    <h3 class="serif text-2xl text-[var(--text-primary)] mb-1">Stylized Chibi</h3>
+                    <p class="text-[10px] tracking-widest text-amber-500/60 uppercase">Digital Illustration</p>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="art-card reveal">
+                <div class="img-container relative">
+                    <!-- Lock Overlay Feature for Ongoing Artwork -->
+                    <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex flex-col items-center justify-center z-10 text-center p-4 select-none">
+                        <i class="fas fa-lock text-3xl text-[var(--accent-color)] mb-3 opacity-90"></i>
+                        <span class="text-[10px] tracking-[0.3em] uppercase font-semibold text-white/90">Work In Progress</span>
+                        <span class="text-[9px] tracking-wider text-[var(--text-muted)] mt-1">Drawing is ongoing</span>
+                    </div>
+                    <img src="Ongoing.jpeg" alt="Charcoal" class="opacity-40" onerror="this.src='https://placehold.co/800x1000/1a1a1a/c5a059?text=charcoal.jpeg'">
+                </div>
+                <div class="p-6">
+                    <h3 class="serif text-2xl text-[var(--text-primary)] mb-1">Charcoal Sketch</h3>
+                    <p class="text-[10px] tracking-widest text-amber-500/60 uppercase">Traditional Medium</p>
+                </div>
+            </div>
+        </div>
+
+        <section id="certificate" class="mt-48 reveal">
+            <div class="coa-paper">
+                <div class="coa-border-inner"></div>
+                
+                <div class="relative z-10 text-center">
+                    <div class="mb-12">
+                        <p class="text-[10px] tracking-[0.5em] text-amber-500 font-semibold uppercase mb-4">Official Verification</p>
+                        <h2 class="serif text-5xl italic text-[var(--text-primary)] leading-tight">Certificate of Authenticity</h2>
+                    </div>
+
+                    <div class="max-w-xl mx-auto space-y-8">
+                        <p class="text-sm italic leading-relaxed text-[var(--text-secondary)] font-light serif text-lg">
+                            "This document serves as formal verification that the digital artworks presented in this collection are original works, 
+                            conceived and executed exclusively by the artist for his friends."
+                        </p>
+
+                        <div class="h-[1px] w-full bg-gradient-to-r from-transparent via-[var(--accent-color)] to-transparent opacity-30 my-10"></div>
+
+                        <!-- Provenance Grid -->
+                        <div class="grid grid-cols-2 gap-y-8 text-left mb-16">
+                            <div class="px-4 border-l border-amber-500/20">
+                                <label class="block text-[9px] tracking-[0.2em] text-amber-500/60 uppercase mb-1">Artist</label>
+                                <span class="text-sm font-medium tracking-wide text-[var(--text-primary)] uppercase">Jbudduan</span>
+                            </div>
+                            <div class="px-4 border-l border-amber-500/20">
+                                <label class="block text-[9px] tracking-[0.2em] text-amber-500/60 uppercase mb-1">Issue Date</label>
+                                <span class="text-sm font-medium tracking-wide text-[var(--text-primary)]">Jun 27, 2026</span>
+                            </div>
+                            <div class="px-4 border-l border-amber-500/20">
+                                <label class="block text-[9px] tracking-[0.2em] text-amber-500/60 uppercase mb-1">Archive ID</label>
+                                <span class="text-sm font-mono text-[var(--text-primary)]">#JBUD-2026-X82</span>
+                            </div>
+                            <div class="px-4 border-l border-amber-500/20">
+                                <label class="block text-[9px] tracking-[0.2em] text-amber-500/60 uppercase mb-1">Medium</label>
+                                <span class="text-sm font-medium tracking-wide text-[var(--text-primary)] uppercase">Digital Mixed Media</span>
+                            </div>
+                        </div>
+
+                        <!-- Signatures and Seal -->
+                        <div class="flex flex-col md:flex-row items-center justify-between pt-10 space-y-12 md:space-y-0">
+                            <!-- Signature Side -->
+                            <div class="text-center md:text-left">
+                                <div class="mb-2 min-h-[80px] flex items-end justify-center md:justify-start">
+                                    <!-- USER: Replace 'signature.png' with your actual signature image -->
+                                    <img src="Signature3.png" alt="Artist Signature" class="signature-img" id="artistSig" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                                    <span class="signature-font text-4xl text-[var(--text-primary)] opacity-80 hidden">Jbudduan</span>
+                                </div>
+                                <div class="h-[1px] w-48 bg-[var(--text-muted)] mx-auto md:mx-0 opacity-40"></div>
+                                <label class="block text-[8px] tracking-[0.3em] uppercase mt-4 text-[var(--text-muted)]">Authorized Artist Signature</label>
+                            </div>
+
+                            <!-- Custom Gold Seal -->
+                            <div class="jbudduan-seal">
+                                <svg class="seal-inner-text" viewBox="0 0 100 100">
+                                    <path id="sealPath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none"></path>
+                                    <text>
+                                        <textPath href="#sealPath">
+                                            JBUDDUAN ART STUDIO • OFFICIAL CERTIFIED • 
+                                        </textPath>
+                                    </text>
+                                </svg>
+                                <div class="seal-center">
+                                    <span class="seal-initial">J</span>
+                                </div>
+                            </div>
+
+                            <!-- QR / Verification Side -->
+                            <div class="text-center md:text-right">
+                                <div class="bg-white w-20 h-20 mx-auto md:ml-auto p-1.5 shadow-lg border border-black/5 overflow-hidden">
+                                    <!-- USER: Replace 'qr-code.png' with your actual QR code image -->
+                                    <img src="May13-065021PM.png" alt="Verification QR" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/150x150/ffffff/000000?text=QR';">
+                                </div>
+                                <label class="block text-[8px] tracking-[0.3em] uppercase mt-4 text-[var(--text-muted)]">Provenance Tracking</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-6 right-6 text-white hover:rotate-90 transition-transform duration-300">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+        <div class="max-w-5xl w-full text-center px-4" onclick="event.stopPropagation()">
+            <div class="bg-black/40 backdrop-blur-sm p-2 inline-block shadow-2xl">
+                <img id="lb-img" src="" alt="Full Resolution" class="mx-auto max-h-[70vh] object-contain">
+            </div>
+            <div class="mt-8">
+                <h3 id="lb-title" class="text-2xl serif italic text-white"></h3>
+                <p id="lb-desc" class="text-amber-500 text-[10px] tracking-[0.3em] uppercase mt-2"></p>
+                <div class="mt-8 flex justify-center">
+                    <button id="downloadBtn" onclick="downloadCurrentImage()" class="text-[10px] tracking-widest uppercase bg-white text-black px-8 py-4 font-bold hover:bg-amber-500 transition-all shadow-lg flex items-center group">
+                        <i class="fas fa-download mr-2 group-hover:translate-y-1 transition-transform"></i>
+                        <span id="btnText">Download Full Resolution</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const lb = document.getElementById('lightbox');
+        const lbImg = document.getElementById('lb-img');
+        const lbTitle = document.getElementById('lb-title');
+        const lbDesc = document.getElementById('lb-desc');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const btnText = document.getElementById('btnText');
+
+        let currentImgSrc = '';
+        let currentImgTitle = '';
+
+        // Corrected Theme Toggle Logic
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            themeIcon.className = newTheme === 'light' ? 'fas fa-sun' : 'fas fa-moon';
+        });
+
+        function openLightbox(src, title, desc) {
+            currentImgSrc = src;
+            currentImgTitle = title;
+            lbImg.src = src;
+            lbTitle.innerText = title;
+            lbDesc.innerText = desc;
+            lb.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            lb.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            btnText.innerText = "Download Full Resolution";
+            downloadBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        async function downloadCurrentImage() {
+            if (!currentImgSrc) return;
+            try {
+                btnText.innerText = "Preparing Download...";
+                downloadBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                const response = await fetch(currentImgSrc);
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${currentImgTitle.replace(/\s+/g, '_').toLowerCase()}.jpg`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+                btnText.innerText = "Download Started!";
+                setTimeout(() => {
+                    btnText.innerText = "Download Full Resolution";
+                    downloadBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }, 2000);
+            } catch (error) {
+                const link = document.createElement('a');
+                link.href = currentImgSrc;
+                link.target = '_blank';
+                link.click();
+                btnText.innerText = "Opening Source...";
+                setTimeout(() => { btnText.innerText = "Download Full Resolution"; downloadBtn.classList.remove('opacity-50', 'cursor-not-allowed'); }, 2000);
+            }
+        }
+
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach((el) => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) el.classList.add("active");
+            });
+        }
+
+        window.addEventListener("scroll", reveal);
+        window.addEventListener("load", reveal);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+    </script>
+</body>
+</html>
