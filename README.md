@@ -1,6 +1,8 @@
 # Tesda Batch 3 | Jbudduan
 
-Developer: Jaymar Budduan
+### Developer: Jaymar Budduan
+
+### Date: Jun 27 2026
 
 A polished digital gallery website for showcasing artwork, certificates, and visual assets in a modern and elegant presentation.
 
@@ -36,4 +38,6 @@ npm run build:css
 - Images used in the gallery are loaded from the project folder.
 
 ## Preview
-You can open the website locally by launching index.html in your browser.
+Live preview: https://j-mar114.github.io/DA/
+
+You can also open the website locally by launching index.html in your browser.
